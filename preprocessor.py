@@ -59,17 +59,25 @@ class Preprocessor:
             print('Nothing to tokenize.')
         else:
             print('Tokenizing the docs......')
-            tik = time.clock()
+            tic = time.clock()
             # append all data into one string
             for doc in self.doc_list:
                 raw_string = self.__normalize__(doc)
                 doc_token = self.__tokenize__(raw_string)
                 doc_token = self.__remove_stopword__(doc_token)
+                for token in doc_token:
+                    self.token_list.append({
+                        'docID': doc['docID'],
+                        'term': token
+                    })
+            toc = time.clock()
+            print('Tokenization finished after ' + str(toc - tic))
 
-                break
+    def get_token_list(self):
+        return self.token_list
 
     def __normalize__(self, doc):
-        raw_string = re.sub('\t|-|\'|,|\.|\d|/|\n', ' ', doc['title'] + ' ' + doc['body'])
+        raw_string = re.sub('\t|-|\'|,|\.|\d|/|\n|<|>|\(|\)', ' ', doc['title'] + ' ' + doc['body'])
         raw_string = re.sub('\s+', ' ', raw_string)
         raw_string = raw_string.lower()
         return raw_string
@@ -89,9 +97,3 @@ class Preprocessor:
             except ValueError:
                 continue
         return doc_token
-
-
-if __name__ == '__main__':
-    p = Preprocessor('./data/Reuter21578/')
-    p.extract()
-    p.process()

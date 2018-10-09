@@ -15,10 +15,10 @@ class Cli:
         # create a general template for GET and POST
         template_parser = ArgumentParser(add_help=False,
                                          conflict_handler='resolve')
-        template_parser.add_argument('URL',
+        template_parser.add_argument('QUERY',
                                      metavar="term1,term2,term3N",
                                      action="store",
-                                     help="The terms of your choice")
+                                     help="The query of your choice")
         # INIT command
         init_parser = method_parsers.add_parser('init')
         init_parser.add_argument('-m',
@@ -32,9 +32,15 @@ class Cli:
                                  metavar='INT',
                                  help='User defined block size.')
         # PHRASE command
-        get_parser = method_parsers.add_parser('phrase', parents=[template_parser])
+        get_parser = method_parsers.add_parser('word',
+                                               parents=[template_parser],
+                                               help='Single word query.')
         # AND command
-        get_parser = method_parsers.add_parser('and', parents=[template_parser])
+        get_parser = method_parsers.add_parser('and',
+                                               parents=[template_parser],
+                                               help='AND query.')
         # OR command
-        get_parser = method_parsers.add_parser('or', parents=[template_parser])
+        get_parser = method_parsers.add_parser('or',
+                                               parents=[template_parser],
+                                               help='OR query.')
         return command_parser

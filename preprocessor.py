@@ -21,7 +21,6 @@ class Preprocessor:
         print('Reading from ' + self.path + '..........')
         tic = time.clock()
         if os.path.isdir(self.path):
-            docID = 1
             for filename in os.listdir(self.path):
                 if filename.endswith('sgm'):
                     # clean the doc and convert to plain text with only title and content
@@ -29,15 +28,15 @@ class Preprocessor:
                         body_flag = 0
                         output = {}
                         for line in f:
-                            if re.match('<TITLE>.*</TITLE>', line):
+                            if re.findall('NEWID="\d+"', line):
+                                output['docID'] = int(re.findall('NEWID="\d+"', line)[0].replace('NEWID="', '').replace('"', ''))
+                            elif re.match('<TITLE>.*</TITLE>', line):
                                 output['title'] = re.sub('<TITLE>|</TITLE>', '', line).replace('\n', '')
                             elif re.match('.*<BODY>.*', line):
                                 body_flag = 1
                                 output['body'] = line.split('<BODY>')[1]
                             elif re.match('.*</BODY>.*', line):
                                 body_flag = 0
-                                output['docID'] = docID
-                                docID += 1
                                 # remove noise
                                 for index, char in enumerate(META_CHAR_SER):
                                     output['body'] = output['body'].replace(char, META_CHARS[index])
@@ -48,7 +47,6 @@ class Preprocessor:
                                 output['body'] += line
                             else:
                                 pass
-                    break
             tok = time.clock()
             print('Extraction finished after ' + str(tok - tic))
         else:

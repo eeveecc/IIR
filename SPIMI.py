@@ -22,13 +22,13 @@ class SPIMI:
                 self.__add_to_dictionary__(dictionary, token)
                 memory_size -= 4
             else:
-                self.__save_block__(dictionary)
+                self.__save_block__(dictionary, str(len(self.block_list) + 1))
                 self.block_list.append('BLOCK' + str(len(self.block_list) + 1))
                 dictionary = {}
                 memory_size = init_memory_size
                 self.__add_to_dictionary__(dictionary, token)
                 memory_size -= 4
-        self.__save_block__(dictionary)
+        self.__save_block__(dictionary, str(len(self.block_list) + 1))
         print(str(len(self.block_list)) + ' blocks files are saved.')
         self.__merge_block__()
         toc = time.clock()
@@ -44,9 +44,11 @@ class SPIMI:
                         self.dictionary[term] = self.dictionary[term] + block_dictionary[term]
                     else:
                         self.dictionary[term] = block_dictionary[term]
+        print('Merged completed.')
+        self.__save_block__(self.dictionary, 'INDEX')
 
-    def __save_block__(self, dictionary):
-        with open('DISK/BLOCK' + str(len(self.block_list) + 1) + '.pickle', 'wb+') as pickle_file:
+    def __save_block__(self, dictionary, name):
+        with open('DISK/BLOCK' + name + '.pickle', 'wb+') as pickle_file:
             pickle.dump(dictionary, pickle_file)
 
     def __add_to_dictionary__(self, dictionary, token):

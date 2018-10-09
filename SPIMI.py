@@ -20,6 +20,7 @@ class SPIMI:
     # invert index, take memory_size and block_size as params
     def invert(self, memory_size, block_size):
         print('Inverting the docs......')
+        print('Free memory: ' + str(memory_size))
         tic = time.clock()
         init_memory_size = memory_size
         dictionary = {}

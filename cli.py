@@ -1,3 +1,7 @@
+# -*- coding:utf8 -*-
+"""
+Cli.py provides command line interface related functions
+"""
 from argparse import ArgumentParser
 
 

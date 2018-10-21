@@ -31,11 +31,11 @@ if __name__ == '__main__':
         if q.is_built():
             result = None
             if args.subparser_name == 'word':
-                result = q.search_term(args.QUERY)
+                result = q.search_term(args.QUERY.lower())
             if args.subparser_name == 'and':
-                result = q.search_AND(args.QUERY)
+                result = q.search_AND(args.QUERY.lower())
             if args.subparser_name == 'or':
-                result = q.search_OR(args.QUERY)
+                result = q.search_OR(args.QUERY.lower())
             print('Found ' + str(len(result)) + ' results:')
             print(result)
         else:

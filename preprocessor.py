@@ -12,9 +12,9 @@ class Preprocessor:
     # init function
     def __init__(self, path):
         self.path = path
-        self.doc_list = []
-        self.token_list = []
-        self.stopword = []
+        self.doc_list = list()
+        self.token_list = list()
+        self.stopword = list()
         with open('data/stopword.txt', 'r') as sw:
             for line in sw:
                 self.stopword.append(line.replace('\n', ''))
@@ -84,7 +84,7 @@ class Preprocessor:
             for doc in self.doc_list:
                 raw_string = self.__normalize__(doc)
                 doc_token = self.__tokenize__(raw_string)
-                doc_token = self.__remove_stopword__(doc_token)
+                #doc_token = self.__remove_stopword__(doc_token)
                 for token in doc_token:
                     self.token_list.append({
                         'docID': doc['docID'],
@@ -99,12 +99,17 @@ class Preprocessor:
 
     # normalize the string
     def __normalize__(self, doc):
-        # combine title and body, then replace all punctuations, symbols etc. to space
-        raw_string = re.sub('\t|-|\'|,|\.|\d|/|\n|<|>|\(|\)', ' ', doc['title'] + ' ' + doc['body'])
+        # combine title and body, then replace all punctuations, symbols, multiple spacem, tab etc. to space
+        raw_string = doc['title'] + ' ' + doc['body']
+        # raw_string = re.sub('\t|-|,|\.|\n', ' ', doc['title'] + ' ' + doc['body'])
+        # replace parenthesis, <>, slashes to empty
+        # raw_string = re.sub('\'|/|<|>|\(|\)', '', raw_string)
+        # replace all numbers to empty
+        # raw_string = re.sub('\d+', '', raw_string)
         # replace multiple spaces to one space
         raw_string = re.sub('\s+', ' ', raw_string)
         # lower case the string
-        raw_string = raw_string.lower()
+        # raw_string = raw_string.lower()
         return raw_string
 
     # tokenization

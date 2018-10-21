@@ -20,7 +20,7 @@ class Query:
     # search and return a list of single word query result
     def search_term(self, term):
         try:
-            return sorted(self.index[term])
+            return sorted(self.index[term.lower()])
         except KeyError:
             return []
 

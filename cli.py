@@ -29,12 +29,14 @@ class Cli:
                                  dest='memory_size',
                                  action='store',
                                  metavar='INT',
-                                 help='User defined maximum memory size.')
+                                 help='User defined maximum memory size.',
+                                 required=False)
         init_parser.add_argument('-b',
                                  dest='block_size',
                                  action='store',
                                  metavar='INT',
-                                 help='User defined block size.')
+                                 help='User defined block size.',
+                                 required=True)
         # PHRASE command
         get_parser = method_parsers.add_parser('word',
                                                parents=[template_parser],

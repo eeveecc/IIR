@@ -37,7 +37,7 @@ class SPIMI:
                 self.__save_block__(dictionary, str(len(self.block_list) + 1))
                 self.block_list.append('BLOCK' + str(len(self.block_list) + 1))
                 dictionary = {}
-                memory_size = init_memory_size
+                self.memory_size = init_memory_size
                 self.__add_to_dictionary__(dictionary, token)
         # save the non-full dictionary to a binary as well
         self.__save_block__(dictionary, str(len(self.block_list) + 1))

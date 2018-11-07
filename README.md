@@ -60,6 +60,6 @@ Found 736 results:
 ```
 
 ## TODO
-- Lossless dictionary compression
-- Improve normalization.
-
+- Normalization of queries
+- Improve merging algorithm
+- Apply BM25 algorithm to rank the results

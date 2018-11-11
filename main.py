@@ -30,17 +30,14 @@ if __name__ == '__main__':
             print('Please define memory size and block size.')
     else:
         # set param to True to enable bm25 ranking
-        q = Query(True)
-        if q.is_built():
-            result = None
-            if args.subparser_name == 'word':
-                result = q.search_term(args.QUERY.lower())
-            if args.subparser_name == 'and':
-                result = q.search_AND(args.QUERY.lower())
-            if args.subparser_name == 'or':
-                result = q.search_OR(args.QUERY.lower())
-            print('Found ' + str(len(result)) + ' results:')
-            print(result)
-        else:
-            print('Please use \'init\' command to build the inverted index first.')
+        q = Query()
+        result = None
+        if args.subparser_name == 'word':
+            result = q.search_term(args.QUERY)
+        if args.subparser_name == 'and':
+            result = q.search_AND(args.QUERY)
+        if args.subparser_name == 'or':
+            result = q.search_OR(args.QUERY)
+        print('Found ' + str(len(result)) + ' results:')
+        print(result)
 

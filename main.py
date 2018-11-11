@@ -33,11 +33,11 @@ if __name__ == '__main__':
         q = Query()
         result = None
         if args.subparser_name == 'word':
-            result = q.search_term(args.QUERY)
+            result = q.search_term(args.QUERY, args.ranking)
         if args.subparser_name == 'and':
-            result = q.search_AND(args.QUERY)
+            result = q.search_AND(args.QUERY, args.ranking)
         if args.subparser_name == 'or':
-            result = q.search_OR(args.QUERY)
+            result = q.search_OR(args.QUERY, args.ranking)
         print('Found ' + str(len(result)) + ' results:')
         print(result)
 

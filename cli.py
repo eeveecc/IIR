@@ -23,6 +23,12 @@ class Cli:
                                      metavar='term1,term2,term3N',
                                      action='store',
                                      help='The query of your choice')
+        template_parser.add_argument('-r',
+                                     dest='ranking',
+                                     default=False,
+                                     action='store_const',
+                                     const=True,
+                                     help='Enable BM25 ranking (False by default)')
         # INIT command
         spimi_parser = method_parsers.add_parser('init')
         spimi_parser.add_argument('-m',

@@ -84,7 +84,6 @@ class Preprocessor:
             for doc in self.doc_list:
                 raw_string = self.__normalize__(doc)
                 doc_token = self.__tokenize__(raw_string)
-                doc_token = self.__remove_stopword__(doc_token)
                 for token in doc_token:
                     self.token_list.append({
                         'docID': doc['docID'],
@@ -99,35 +98,28 @@ class Preprocessor:
 
     # normalize the string
     def __normalize__(self, doc):
-        # combine title and body, then replace all punctuations, symbols, multiple spacem, tab etc. to space
+        # combine title and body, then replace all tab and newline to space
         raw_string = doc['title'] + ' ' + doc['body']
-        raw_string = re.sub('\t|-|,|\.|\n', ' ', raw_string)
-        # replace parenthesis, <>, slashes to empty
-        raw_string = re.sub('\'|/|<|>|\(|\)', '', raw_string)
-        # replace all numbers to empty
-        raw_string = re.sub('\d+', '', raw_string)
+        raw_string = re.sub('\t|\n', ' ', raw_string)
         # lower case the string
         raw_string = raw_string.lower()
+        # replace all numbers to empty
+        raw_string = re.sub('\d+', '', raw_string)
         # replace multiple spaces to one space
         raw_string = re.sub('\s+', ' ', raw_string)
         return raw_string
 
-    # tokenization
+    # tokenization and remove stop words
     def __tokenize__(self, raw_string):
         doc_token = raw_string.split(' ')
         try:
             doc_token.remove(' ')
         except ValueError:
             pass
-        return doc_token
-
-    # remove the stopwords from the token lists
-    def __remove_stopword__(self, doc_token):
-        # 0:1
-        # 0:
         for stopword in self.stopword:
             try:
                 doc_token.remove(stopword)
             except ValueError:
                 pass
         return doc_token
+

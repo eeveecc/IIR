@@ -98,9 +98,11 @@ class Preprocessor:
 
     # normalize the string
     def __normalize__(self, doc):
-        # combine title and body, then replace all tab and newline to space
+        # combine title and body, then replace all punctuations, symbols, multiple spacem, tab etc. to space
         raw_string = doc['title'] + ' ' + doc['body']
-        raw_string = re.sub('\t|\n', ' ', raw_string)
+        raw_string = re.sub('\t|-|,|\.|\n', ' ', raw_string)
+        # replace parenthesis, <>, slashes to empty
+        raw_string = re.sub('/|<|>|\(|\)|\+', '', raw_string)
         # lower case the string
         raw_string = raw_string.lower()
         # replace all numbers to empty
@@ -118,7 +120,7 @@ class Preprocessor:
             pass
         for stopword in self.stopword:
             try:
-                doc_token.remove(stopword)
+                doc_token = [value for value in doc_token if value != stopword]
             except ValueError:
                 pass
         return doc_token

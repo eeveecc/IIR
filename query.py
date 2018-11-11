@@ -3,24 +3,29 @@
 query.py contains search query functions.
 """
 import pickle
+import os
 from collections import Counter
 
 
 class Query:
 
     # load the inverted index from local binary file
-    def __init__(self):
-        self.index = None
+    def __init__(self, bm25):
+        self.spimi_model = None
+        self.bm25_model = None
         try:
             with open('DISK/BLOCKINDEX.pickle', 'rb') as pickle_file:
-                self.index = pickle.load(pickle_file)
+                self.model = pickle.load(pickle_file)
+            if bm25:
+                with open('DISK/bm25.pickle', 'rb') as pickle_file:
+                    self.model = pickle.load(pickle_file)
         except FileNotFoundError:
-            print('cant find it.')
+            print('cant find the model binary.')
 
     # search and return a list of single word query result
     def search_term(self, term):
         try:
-            return sorted(self.index[term.lower()])
+            return sorted(self.model[term.lower()])
         except KeyError:
             return []
 
@@ -45,7 +50,7 @@ class Query:
 
     # check if the inverted index is built
     def is_built(self):
-        return self.index is not None
+        return self.model is not None
 
 
 

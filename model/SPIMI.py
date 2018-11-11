@@ -30,14 +30,14 @@ class SPIMI:
         dictionary = {}
         for token in self.token_list:
             # keep adding to dictionary if memory is good
-            if memory_size >= block_size*24:
+            if self.memory_size >= block_size*24:
                 self.__add_to_dictionary__(dictionary, token)
             # if memory is not enough, save the current dictionary to a binary file and clean the memory
             else:
                 self.__save_block__(dictionary, str(len(self.block_list) + 1))
                 self.block_list.append('BLOCK' + str(len(self.block_list) + 1))
                 dictionary = {}
-                memory_size = init_memory_size
+                self.memory_size = init_memory_size
                 self.__add_to_dictionary__(dictionary, token)
         # save the non-full dictionary to a binary as well
         self.__save_block__(dictionary, str(len(self.block_list) + 1))

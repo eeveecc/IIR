@@ -109,6 +109,8 @@ class Query:
             term = re.sub('/|<|>|\(|\)|\+', '', term)
             # lower case the string
             term = term.lower()
+            # replace ***s'
+            term = re.sub('s\'', 's', term)
             # replace all numbers to empty
             term = re.sub('\d+', '', term)
             # replace multiple spaces to one space
@@ -117,9 +119,10 @@ class Query:
                 new_query.append(term)
         for stopword in self.stopword:
             try:
-                query = [value for value in new_query if value != stopword]
+                new_query = [value for value in new_query if value != stopword]
             except ValueError:
                 pass
-        return query
+        print('Filtered search query: ', new_query)
+        return new_query
 
 

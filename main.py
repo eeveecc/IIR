@@ -15,7 +15,7 @@ if __name__ == '__main__':
     # create and parse user input using command line
     args = Cli.create_parser().parse_args()
     # build the inverted index
-    if args.subparser_name == 'init_spimi':
+    if args.subparser_name == 'init':
         if args.block_size is not None:
             p = Preprocessor('./data/Reuter21578/')
             p.extract()

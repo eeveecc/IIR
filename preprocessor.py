@@ -105,6 +105,8 @@ class Preprocessor:
         raw_string = re.sub('/|<|>|\(|\)|\+', '', raw_string)
         # lower case the string
         raw_string = raw_string.lower()
+        # replace ***s'
+        raw_string = re.sub('s\'\s', 's ', raw_string)
         # replace all numbers to empty
         raw_string = re.sub('\d+', '', raw_string)
         # replace multiple spaces to one space

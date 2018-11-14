@@ -14,7 +14,7 @@ Some cool implementation of information retrieval.
 
 ## Test Results
 
-Single word: america (without ranking)
+america (without ranking)
 
 ```
 python -m main word america
@@ -23,7 +23,7 @@ Found 399 results:
 [2, 50, 51, 74, 79, 224, 382, 397, 412, 474, 478, ...]
 ```
 
-Single word: america (with ranking)
+america (with ranking)
 
 ```
 python -m main word -r america
@@ -63,8 +63,19 @@ Found 687 results:
 [17357, 6657, 7135, 12277, 3534, 6896, 5004, 4969, 5473, 1579, 8483, 12848, ...]
 ```
 
+Democrats’(without ranking)
 
-## TODO
-- Normalization of queries
-- Improve merging algorithm
-- Apply BM25 algorithm to rank the results
+```
+python -m main word Democrats'
+Found 85 results:
+[28, 219, 234, 1416, 1786, 1857, 1895, 1900, 1908, 1999, 2011, 2132, 2140, ...]
+```
+
+Democrats' (with ranking)
+
+```
+python -m main word Democrats' -r
+Found 85 results:
+[21508, 1895, 9848, 15369, 12773, 9774, 10905, 18731, 14419, 1786, 15154, ...]
+```
+
